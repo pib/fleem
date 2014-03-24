@@ -17,13 +17,23 @@ Links
 
 
 """
-from flask_fleem import __version__
 from setuptools import setup
 import sys
 requires = ['Flask>=0.9',
-            'Flask-Assets>=0.8']
+            'Flask-Assets>=0.8',
+            'PyYAML>=3.10']
 if sys.version_info < (2, 6):
     requires.append('simplejson')
+
+import re
+VERSIONFILE = "flask_fleem/__init__.py"
+verstrline = open(VERSIONFILE, "rt").read()
+VSRE = r"^__version__ = ['\"]([^'\"]*)['\"]"
+mo = re.search(VSRE, verstrline, re.M)
+if mo:
+    __version__ = mo.group(1)
+else:
+    raise RuntimeError("Unable to find version string in %s." % (VERSIONFILE,))
 
 setup(
     name='Flask-Fleem',
